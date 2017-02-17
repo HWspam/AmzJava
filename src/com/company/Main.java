@@ -51,8 +51,9 @@ public class Main {
             int index = r.nextInt(neighbors.size());
             return neighbors.get(index);
         } else{
-            if(first == true){
-                rooms.get(row).get(col).equals(true);
+            if(ending == true){
+                rooms.get(col).get(row).setX(true);
+                ending = false;
 
             }
         }
@@ -83,17 +84,14 @@ public class Main {
         while (creaeMaze(rooms, nextRoom)){
 
         }
-        if(first == false){
-            rooms.get(begin).get(begin2).equals(true);
-            first = true;
-        }
+
         return true;
     }
 
 
     public static void main(String[] args) {
         ArrayList<ArrayList<Room>> rooms = createRooms();
-        rooms.get(begin).get(begin2).equals(true);
+        rooms.get(0).get(0).setO(true);
         creaeMaze(rooms, rooms.get(0).get(0));
         for (ArrayList<Room> row : rooms) {
             System.out.print(" _");
@@ -104,10 +102,10 @@ public class Main {
 
 
             for(Room room : row) {
-                if (room.O) {
+                if (room.isO()) {
                     System.out.print(room.O ? "O" : "");
                     System.out.print(room.hasRight ? "|" : " ");
-                } else if (room.O) {
+                } else if (room.isX()) {
                     System.out.print(room.X ? "X" : "");
                     System.out.print(room.hasRight ? "|" : " ");
 
