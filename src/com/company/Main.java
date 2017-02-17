@@ -5,8 +5,14 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Main {
-
+    public static Random r = new Random();
     static final int SIZE = 10; //final cant change from ANYWHERE
+    public static boolean first = true;
+    public static boolean ending = true;
+    public static int begin = r.nextInt(SIZE);
+    public static int begin2 =r.nextInt(SIZE);
+
+
 
     static ArrayList<ArrayList<Room>> createRooms() {
         ArrayList<ArrayList<Room>> rooms = new ArrayList<>();
@@ -44,6 +50,11 @@ public class Main {
             Random r = new Random();
             int index = r.nextInt(neighbors.size());
             return neighbors.get(index);
+        } else{
+            if(first == true){
+                rooms.get(row).get(col).equals(true);
+
+            }
         }
         return null;
     }
@@ -69,13 +80,20 @@ public class Main {
         }
         tearDownWall(room, nextRoom);
 
-        while (creaeMaze(rooms, nextRoom));
+        while (creaeMaze(rooms, nextRoom)){
+
+        }
+        if(first == false){
+            rooms.get(begin).get(begin2).equals(true);
+            first = true;
+        }
         return true;
     }
 
 
     public static void main(String[] args) {
         ArrayList<ArrayList<Room>> rooms = createRooms();
+        rooms.get(begin).get(begin2).equals(true);
         creaeMaze(rooms, rooms.get(0).get(0));
         for (ArrayList<Room> row : rooms) {
             System.out.print(" _");
@@ -83,21 +101,24 @@ public class Main {
         System.out.println();
         for (ArrayList<Room> row : rooms) {
             System.out.print("|");
-            for (Room room : row) {
-                if (room.hasBottom) {
-                    System.out.print("_");
-                }else {
-                    System.out.print(" ");
-                }
-                if (room.hasRight) {
-                    System.out.print("|");
-                } else {
-                    System.out.print(" ");
-                }
 
+
+            for(Room room : row) {
+                if (room.O) {
+                    System.out.print(room.O ? "O" : "");
+                    System.out.print(room.hasRight ? "|" : " ");
+                } else if (room.O) {
+                    System.out.print(room.X ? "X" : "");
+                    System.out.print(room.hasRight ? "|" : " ");
+
+                } else {
+                    System.out.print(room.hasBottom ? "_" : " ");
+                    System.out.print(room.hasRight ? "|" : " ");
+
+                }
             }
             System.out.println();
         }
-	// write your code here
+
     }
 }
